@@ -1,1 +1,72 @@
-SupervisorDashboardWindow 0 0 600 400 Supervisor Dashboard Qt::AlignCenter Search by Username Search Submit Forms
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SupervisorDashboardWindow</class>
+ <widget class="QWidget" name="SupervisorDashboardWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>600</width><height>400</height></rect>
+  </property>
+  <property name="windowTitle"><string>Supervisor Dashboard</string></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="text"><string><b>Supervisor Dashboard</b></string></property>
+     <property name="alignment"><set>Qt::AlignCenter</set></property>
+    </widget>
+   </item>
+
+   <item>
+    <layout class="QHBoxLayout" name="searchLayout">
+     <item>
+      <widget class="QLabel" name="searchLabel">
+       <property name="text"><string>Search by Username:</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="searchEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchButton">
+       <property name="text"><string>Search</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <item>
+    <widget class="QTableWidget" name="donorTable">
+     <property name="columnCount">
+      <number>5</number>
+     </property>
+     <property name="rowCount">
+      <number>0</number>
+     </property>
+     <column>
+      <property name="text"><string>Username</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Blood Type</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Region</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Woreda</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Kebele</string></property>
+     </column>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QPushButton" name="formsButton">
+     <property name="text"><string>Submit Forms</string></property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

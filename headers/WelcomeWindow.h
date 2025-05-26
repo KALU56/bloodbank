@@ -2,10 +2,12 @@
 #define WELCOMEWINDOW_H
 
 #include <QMainWindow>
-#include "DatabaseManager.h"  // Database connection handling
+#include "DatabaseManager.h"
+#include "DonorLoginWindow.h"
+#include "SupervisorLoginWindow.h"
 
 namespace Ui {
-class WelcomeWindow;          // This comes from "ui_WelcomeWindow.h", auto-generated
+class WelcomeWindow;
 }
 
 class WelcomeWindow : public QMainWindow
@@ -16,9 +18,15 @@ public:
     explicit WelcomeWindow(QWidget *parent = nullptr);
     ~WelcomeWindow();
 
+private slots:
+    void on_donorButton_clicked();
+    void on_supervisorButton_clicked();
+
 private:
-    Ui::WelcomeWindow *ui;    // Pointer to the generated UI class
-    DatabaseManager dbManager; // Handles database connection
+    Ui::WelcomeWindow *ui;
+    DatabaseManager dbManager;
+    DonorLoginWindow *donorLoginWindow;
+    SupervisorLoginWindow *supervisorLoginWindow;
 };
 
 #endif // WELCOMEWINDOW_H

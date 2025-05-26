@@ -1,1 +1,77 @@
-DonorDashboardWindow 0 0 600 400 Donor Dashboard Qt::AlignCenter Medical History HIV Syphilis Hepatitis Sugar Level Message Health History Date Weight Blood Pressure Sugar Level Start Time End Time
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DonorDashboardWindow</class>
+ <widget class="QWidget" name="DonorDashboardWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Donor Dashboard</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="text">
+      <string>Donor Dashboard</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="font">
+      <font><pointsize>16</pointsize><bold>true</bold></font>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelMedical">
+     <property name="text">
+      <string>Medical History</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="medicalTable">
+     <column>
+      <property name="text"><string>HIV</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Syphilis</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Hepatitis</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Sugar Level</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Message</string></property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelHealth">
+     <property name="text">
+      <string>Health History</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="healthTable">
+     <column><property name="text"><string>Date</string></property></column>
+     <column><property name="text"><string>Weight</string></property></column>
+     <column><property name="text"><string>Blood Pressure</string></property></column>
+     <column><property name="text"><string>Sugar Level</string></property></column>
+     <column><property name="text"><string>Start Time</string></property></column>
+     <column><property name="text"><string>End Time</string></property></column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

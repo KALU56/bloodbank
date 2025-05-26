@@ -11,8 +11,14 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Sql)
 
 # Enable Qt automatic processing
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON) # Keep this ON
+
+# --- ADD THIS LINE TO TELL AUTOUIC WHERE TO FIND .ui FILES ---
+# This tells AUTOUIC to look in the 'ui' directory for .ui files
+# corresponding to includes like "ui_WelcomeWindow.h"
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+
 
 # Include directories
 include_directories(headers)
@@ -43,6 +49,8 @@ set(HEADERS
 )
 
 # Collect UI files (Qt Designer)
+# Keep this as it's still good practice to explicitly list them,
+# although the CMAKE_AUTOUIC_SEARCH_PATHS might make it redundant for simple cases.
 set(UIS
     ui/DonorDashboardWindow.ui
     ui/DonorLoginWindow.ui
@@ -55,7 +63,6 @@ set(UIS
 
 # Database and schema files (optional for packaging, not compilation)
 set(DATABASE_FILES
-    database/bloodbank.db
     database/schema_postgres.sql
 )
 
@@ -64,6 +71,7 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}
     ${HEADERS}
     ${UIS}
+    database/schema_postgres.sql # Ensure .ui files are still part of the target's sources
 )
 
 # Link the necessary Qt libraries

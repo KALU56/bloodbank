@@ -1,10 +1,30 @@
-#include "SupervisorFormsWindow.h" #include "ui_SupervisorFormsWindow.h" #include
+#include "SupervisorFormsWindow.h"
+#include "ui_SupervisorFormsWindow.h"
+#include <QMessageBox>
 
-SupervisorFormsWindow::SupervisorFormsWindow(QWidget *parent) : QWidget(parent), ui(new Ui::SupervisorFormsWindow), dbManager(new DatabaseManager()) { ui->setupUi(this); }
+SupervisorFormsWindow::SupervisorFormsWindow(QWidget *parent)
+    : QWidget(parent),
+    ui(new Ui::SupervisorFormsWindow),
+    dbManager(new DatabaseManager())
+{
+    ui->setupUi(this);
+}
 
-SupervisorFormsWindow::~SupervisorFormsWindow() { delete ui; delete dbManager; }
+SupervisorFormsWindow::~SupervisorFormsWindow()
+{
+    delete ui;
+    delete dbManager;
+}
 
-void SupervisorFormsWindow::on_medicalSubmitButton_clicked() { QString username = ui->medicalUsernameEdit->text(); Donor donor = dbManager->getDonorByUsername(username); if (donor.username.isEmpty()) { QMessageBox::warning(this, "Submission Failed", "Donor not found."); return; }
+void SupervisorFormsWindow::on_medicalSubmitButton_clicked()
+{
+    QString username = ui->medicalUsernameEdit->text();
+    Donor donor = dbManager->getDonorByUsername(username);
+
+    if (donor.username.isEmpty()) {
+        QMessageBox::warning(this, "Submission Failed", "Donor not found.");
+        return;
+    }
 
     MedicalHistory medical;
     medical.donorId = donor.id;
@@ -25,10 +45,17 @@ void SupervisorFormsWindow::on_medicalSubmitButton_clicked() { QString username 
     } else {
         QMessageBox::warning(this, "Submission Failed", "Database error.");
     }
-
 }
 
-void SupervisorFormsWindow::on_healthSubmitButton_clicked() { QString username = ui->healthUsernameEdit->text(); Donor donor = dbManager->getDonorByUsername(username); if (donor.username.isEmpty()) { QMessageBox::warning(this, "Submission Failed", "Donor not found."); return; }
+void SupervisorFormsWindow::on_healthSubmitButton_clicked()
+{
+    QString username = ui->healthUsernameEdit->text();
+    Donor donor = dbManager->getDonorByUsername(username);
+
+    if (donor.username.isEmpty()) {
+        QMessageBox::warning(this, "Submission Failed", "Donor not found.");
+        return;
+    }
 
     HealthHistory health;
     health.donorId = donor.id;
@@ -51,5 +78,4 @@ void SupervisorFormsWindow::on_healthSubmitButton_clicked() { QString username =
     } else {
         QMessageBox::warning(this, "Submission Failed", "Database error.");
     }
-
 }

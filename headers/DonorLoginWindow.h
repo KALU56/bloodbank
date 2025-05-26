@@ -1,15 +1,32 @@
-#ifndef WELCOMEWINDOW_H #define WELCOMEWINDOW_H
+#ifndef DONORLOGINWINDOW_H
+#define DONORLOGINWINDOW_H
 
-#include #include "DonorLoginWindow.h" #include "SupervisorLoginWindow.h"
+#include <QWidget>
+#include "DatabaseManager.h"
+#include "DonorRegisterWindow.h"
+#include "DonorDashboardWindow.h"
 
-namespace Ui { class WelcomeWindow; }
+namespace Ui {
+class DonorLoginWindow;
+}
 
-class WelcomeWindow : public QMainWindow { Q_OBJECT
+class DonorLoginWindow : public QWidget
+{
+    Q_OBJECT
 
-public: explicit WelcomeWindow(QWidget *parent = nullptr); ~WelcomeWindow();
+public:
+    explicit DonorLoginWindow(QWidget *parent = nullptr);
+    ~DonorLoginWindow();
 
-private slots: void on_donorButton_clicked(); void on_supervisorButton_clicked();
+private slots:
+    void on_loginButton_clicked();
+    void on_registerButton_clicked();
 
-private: Ui::WelcomeWindow *ui; DonorLoginWindow *donorLoginWindow; SupervisorLoginWindow *supervisorLoginWindow; };
+private:
+    Ui::DonorLoginWindow *ui;
+    DatabaseManager *dbManager;
+    DonorRegisterWindow *registerWindow;
+    DonorDashboardWindow *dashboardWindow;
+};
 
-#endif // WELCOMEWINDOW_H
+#endif // DONORLOGINWINDOW_H
