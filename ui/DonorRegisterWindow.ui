@@ -1,0 +1,1 @@
+DonorRegisterWindow 0 0 400 600 Donor Registration First Name Last Name Gender Male Female Phone Username Password QLineEdit::Password Blood Type A+ A- B+ B- AB+ AB- O+ O- Region Woreda Kebele City Submit

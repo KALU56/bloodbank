@@ -1,0 +1,1 @@
+SupervisorLoginWindow 0 0 400 300 Supervisor Login Qt::AlignCenter Username QLineEdit::Password Password Login
