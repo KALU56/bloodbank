@@ -13,7 +13,7 @@ class DonorRegisterWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit DonorRegisterWindow(QWidget* parent = nullptr);
+    explicit DonorRegisterWindow(DatabaseManager* db, QWidget* parent = nullptr);
     ~DonorRegisterWindow();
 
 protected:

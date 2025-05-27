@@ -39,16 +39,28 @@ bool DatabaseManager::donorLogin(const QString& username, const QString& passwor
 }
 
 bool DatabaseManager::supervisorLogin(const QString& username, const QString& password) {
+    qDebug() << "Attempting login for username:" << username << "password:" << password;
+
     QSqlQuery query;
-    query.prepare("SELECT * FROM supervisors WHERE username = :username AND password = :password");
-    query.bindValue(":username", username);
-    query.bindValue(":password", password);
+    query.prepare("SELECT COUNT(*) FROM supervisors WHERE username = ? AND password = ?");
+    query.addBindValue(username);
+    query.addBindValue(password);
+
     if (!query.exec()) {
-        qDebug() << "Supervisor login query failed:" << query.lastError().text();
+        qDebug() << "Database query failed:" << query.lastError().text();
         return false;
     }
-    return query.next();
+
+    if (query.next()) {
+        int count = query.value(0).toInt();
+        qDebug() << "Query result count:" << count;
+        return (count > 0);
+    }
+
+    qDebug() << "No results returned from query.";
+    return false;
 }
+
 
 bool DatabaseManager::registerDonor(const Donor& donor, const QString& password) {
     QSqlQuery query;

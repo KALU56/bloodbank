@@ -31,9 +31,11 @@ void DonorLoginWindow::onLoginButtonClicked() {
     if (dbManager->donorLogin(username, password)) {
         qDebug() << "Login successful for" << username;
         if (!dashboardWindow) {
-            dashboardWindow = new DonorDashboardWindow(username, this);
+            dashboardWindow = new DonorDashboardWindow(username, nullptr);  // No parent to make it independent
         }
         dashboardWindow->show();
+        dashboardWindow->raise();
+        dashboardWindow->activateWindow();
         this->hide();
     } else {
         QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
@@ -44,16 +46,19 @@ void DonorLoginWindow::onRegisterButtonClicked() {
     qDebug() << "Register button clicked";
     if (!registerWindow) {
         qDebug() << "Creating new DonorRegisterWindow";
-        registerWindow = new DonorRegisterWindow(this);
+        registerWindow = new DonorRegisterWindow(dbManager, nullptr);  // Use nullptr to make it a top-level window
     }
     qDebug() << "Showing DonorRegisterWindow";
     registerWindow->show();
+    registerWindow->raise();
+    registerWindow->activateWindow();
+    qDebug() << "DonorRegisterWindow visible:" << registerWindow->isVisible();
     this->hide();
 }
 
 void DonorLoginWindow::closeEvent(QCloseEvent* event) {
     if (parentWidget()) {
-        parentWidget()->show();  // Re-show WelcomeWindow when this closes
+        parentWidget()->show();
     }
     event->accept();
 }

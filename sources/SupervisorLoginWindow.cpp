@@ -32,8 +32,9 @@ SupervisorLoginWindow::~SupervisorLoginWindow() {
 }
 
 void SupervisorLoginWindow::on_loginButton_clicked() {
-    QString username = ui->usernameEdit->text();
-    QString password = ui->passwordEdit->text();
+    QString username = ui->usernameEdit->text().trimmed();
+    QString password = ui->passwordEdit->text().trimmed();
+
 
     if (dbManager->supervisorLogin(username, password)) {
         if (!dashboardWindow) {

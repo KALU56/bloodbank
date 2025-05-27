@@ -23,8 +23,8 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void onLoginButtonClicked();       // ⬅ Add this
-    void onRegisterButtonClicked();    // ⬅ And this
+    void onLoginButtonClicked();
+    void onRegisterButtonClicked();
 
 private:
     Ui::DonorLoginWindow *ui;

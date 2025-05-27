@@ -69,7 +69,7 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}
     ${HEADERS}
     ${UIS}
-    ${DATABASE_FILES}
+
 )
 
 # Link Qt libraries
