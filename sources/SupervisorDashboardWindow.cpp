@@ -1,31 +1,29 @@
 #include "SupervisorDashboardWindow.h"
 #include "ui_SupervisorDashboardWindow.h"
 #include <QMessageBox>
+#include "SupervisorFormsWindow.h"
 
-SupervisorDashboardWindow::SupervisorDashboardWindow(const QString &username, QWidget *parent)
+SupervisorDashboardWindow::SupervisorDashboardWindow(const QString& username, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorDashboardWindow),
     dbManager(new DatabaseManager()),
     formsWindow(nullptr),
-    loggedInUsername(username)  // Store the username
-{
+    loggedInUsername(username) {
     ui->setupUi(this);
-
-    // Initialize donor table
     ui->donorTable->setColumnCount(5);
     ui->donorTable->setHorizontalHeaderLabels({"Username", "Blood Type", "Region", "Woreda", "Kebele"});
     ui->donorTable->horizontalHeader()->setStretchLastSection(true);
+    connect(ui->searchButton, &QPushButton::clicked, this, &SupervisorDashboardWindow::on_searchButton_clicked);
+    connect(ui->formsButton, &QPushButton::clicked, this, &SupervisorDashboardWindow::on_formsButton_clicked);
 }
 
-SupervisorDashboardWindow::~SupervisorDashboardWindow()
-{
+SupervisorDashboardWindow::~SupervisorDashboardWindow() {
     delete ui;
     delete dbManager;
-    if (formsWindow) delete formsWindow;
+    delete formsWindow;
 }
 
-void SupervisorDashboardWindow::on_searchButton_clicked()
-{
+void SupervisorDashboardWindow::on_searchButton_clicked() {
     QString username = ui->searchEdit->text();
     Donor donor = dbManager->getDonorByUsername(username);
 
@@ -37,8 +35,7 @@ void SupervisorDashboardWindow::on_searchButton_clicked()
     }
 }
 
-void SupervisorDashboardWindow::on_formsButton_clicked()
-{
+void SupervisorDashboardWindow::on_formsButton_clicked() {
     if (!formsWindow) {
         formsWindow = new SupervisorFormsWindow(this);
     }
@@ -46,8 +43,7 @@ void SupervisorDashboardWindow::on_formsButton_clicked()
     this->hide();
 }
 
-void SupervisorDashboardWindow::displayDonor(const Donor& donor)
-{
+void SupervisorDashboardWindow::displayDonor(const Donor& donor) {
     ui->donorTable->setRowCount(1);
     ui->donorTable->setItem(0, 0, new QTableWidgetItem(donor.username));
     ui->donorTable->setItem(0, 1, new QTableWidgetItem(donor.bloodType));

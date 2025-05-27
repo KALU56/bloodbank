@@ -2,22 +2,21 @@
 #include "ui_SupervisorFormsWindow.h"
 #include <QMessageBox>
 
-SupervisorFormsWindow::SupervisorFormsWindow(QWidget *parent)
+SupervisorFormsWindow::SupervisorFormsWindow(QWidget* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorFormsWindow),
-    dbManager(new DatabaseManager())
-{
+    dbManager(new DatabaseManager()) {
     ui->setupUi(this);
+    connect(ui->medicalSubmitButton, &QPushButton::clicked, this, &SupervisorFormsWindow::on_medicalSubmitButton_clicked);
+    connect(ui->healthSubmitButton, &QPushButton::clicked, this, &SupervisorFormsWindow::on_healthSubmitButton_clicked);
 }
 
-SupervisorFormsWindow::~SupervisorFormsWindow()
-{
+SupervisorFormsWindow::~SupervisorFormsWindow() {
     delete ui;
     delete dbManager;
 }
 
-void SupervisorFormsWindow::on_medicalSubmitButton_clicked()
-{
+void SupervisorFormsWindow::on_medicalSubmitButton_clicked() {
     QString username = ui->medicalUsernameEdit->text();
     Donor donor = dbManager->getDonorByUsername(username);
 
@@ -47,8 +46,7 @@ void SupervisorFormsWindow::on_medicalSubmitButton_clicked()
     }
 }
 
-void SupervisorFormsWindow::on_healthSubmitButton_clicked()
-{
+void SupervisorFormsWindow::on_healthSubmitButton_clicked() {
     QString username = ui->healthUsernameEdit->text();
     Donor donor = dbManager->getDonorByUsername(username);
 

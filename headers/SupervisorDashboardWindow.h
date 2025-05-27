@@ -3,18 +3,19 @@
 
 #include <QWidget>
 #include "DatabaseManager.h"
-#include "SupervisorFormsWindow.h"
+#include "Donor.h"
 
 namespace Ui {
 class SupervisorDashboardWindow;
 }
 
-class SupervisorDashboardWindow : public QWidget
-{
+class SupervisorFormsWindow; // Forward declaration
+
+class SupervisorDashboardWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit SupervisorDashboardWindow(const QString &username, QWidget *parent = nullptr);  // Updated constructor
+    explicit SupervisorDashboardWindow(const QString& username, QWidget* parent = nullptr);
     ~SupervisorDashboardWindow();
 
 private slots:
@@ -24,10 +25,10 @@ private slots:
 private:
     void displayDonor(const Donor& donor);
 
-    Ui::SupervisorDashboardWindow *ui;
-    DatabaseManager *dbManager;
-    SupervisorFormsWindow *formsWindow;
-    QString loggedInUsername;  // Store the username
+    Ui::SupervisorDashboardWindow* ui;
+    DatabaseManager* dbManager;
+    SupervisorFormsWindow* formsWindow;
+    QString loggedInUsername;
 };
 
 #endif // SUPERVISORDASHBOARDWINDOW_H

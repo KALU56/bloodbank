@@ -1,51 +1,30 @@
-#include "DonorLoginWindow.h"
-#include "ui_DonorLoginWindow.h"
-#include <QMessageBox>
+#ifndef DONORDASHBOARDWINDOW_H
+#define DONORDASHBOARDWINDOW_H
 
-DonorLoginWindow::DonorLoginWindow(QWidget *parent)
-    : QWidget(parent),
-    ui(new Ui::DonorLoginWindow),
-    dbManager(new DatabaseManager()),
-    registerWindow(nullptr),
-    dashboardWindow(nullptr)
-{
-    ui->setupUi(this);
+#include <QWidget>
+#include "DatabaseManager.h"
+#include "Donor.h"
+#include "MedicalHistory.h"
+#include "HealthHistory.h"
+
+namespace Ui {
+class DonorDashboardWindow;
 }
 
-DonorLoginWindow::~DonorLoginWindow()
-{
-    delete ui;
-    delete dbManager;
-    delete registerWindow;
-    delete dashboardWindow;
-}
+class DonorDashboardWindow : public QWidget {
+    Q_OBJECT
 
-void DonorLoginWindow::on_loginButton_clicked()
-{
-    QString username = ui->usernameEdit->text();
-    QString password = ui->passwordEdit->text();
+public:
+    explicit DonorDashboardWindow(const QString& username, QWidget* parent = nullptr);
+    ~DonorDashboardWindow();
 
-    if (dbManager->donorLogin(username, password)) {
-        // Successful login
-        QMessageBox::information(this, "Login Successful", "Welcome, " + username + "!");
+private:
+    void loadMedicalHistory();
+    void loadHealthHistory();
 
-        // Create and show DonorDashboardWindow
-        if (!dashboardWindow) {
-            dashboardWindow = new DonorDashboardWindow(username, nullptr);  // Pass nullptr for main window
-        }
+    Ui::DonorDashboardWindow* ui;
+    DatabaseManager* dbManager;
+    QString username;
+};
 
-        dashboardWindow->show();
-        this->close();  // Close login window
-    } else {
-        QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
-    }
-}
-
-void DonorLoginWindow::on_registerButton_clicked()
-{
-    if (!registerWindow) {
-        registerWindow = new DonorRegisterWindow(this);  // Parent = this
-    }
-    registerWindow->show();
-    this->hide();  // Hide login window while registering
-}
+#endif // DONORDASHBOARDWINDOW_H

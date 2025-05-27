@@ -2,25 +2,24 @@
 #include "ui_DonorRegisterWindow.h"
 #include <QMessageBox>
 #include <QCloseEvent>
-#include "DonorLoginWindow.h"  // Optional, if needed
+#include <QUuid>
 
-DonorRegisterWindow::DonorRegisterWindow(QWidget *parent)
+DonorRegisterWindow::DonorRegisterWindow(QWidget* parent)
     : QWidget(parent),
     ui(new Ui::DonorRegisterWindow),
-    dbManager(new DatabaseManager())
-{
+    dbManager(new DatabaseManager()) {
     ui->setupUi(this);
+    connect(ui->submitButton, &QPushButton::clicked, this, &DonorRegisterWindow::on_submitButton_clicked);
 }
 
-DonorRegisterWindow::~DonorRegisterWindow()
-{
+DonorRegisterWindow::~DonorRegisterWindow() {
     delete ui;
     delete dbManager;
 }
 
-void DonorRegisterWindow::on_submitButton_clicked()
-{
+void DonorRegisterWindow::on_submitButton_clicked() {
     Donor donor;
+    donor.id = QUuid::createUuid().toString(QUuid::WithoutBraces); // Generate unique ID
     donor.firstName = ui->firstNameEdit->text();
     donor.lastName = ui->lastNameEdit->text();
     donor.gender = ui->genderCombo->currentText();
@@ -40,22 +39,18 @@ void DonorRegisterWindow::on_submitButton_clicked()
 
     if (dbManager->registerDonor(donor, password)) {
         QMessageBox::information(this, "Success", "Registration successful! Please log in.");
-
-        // Go back to DonorLoginWindow
         if (parentWidget()) {
-            parentWidget()->show();  // Re-show the login window
+            parentWidget()->show();
         }
-
-        this->close();  // Close registration window
+        this->close();
     } else {
         QMessageBox::warning(this, "Registration Failed", "Username already exists or database error.");
     }
 }
 
-void DonorRegisterWindow::closeEvent(QCloseEvent *event)
-{
+void DonorRegisterWindow::closeEvent(QCloseEvent* event) {
     if (parentWidget()) {
-        parentWidget()->show();  // Re-show login window when registration is closed
+        parentWidget()->show();
     }
     event->accept();
 }

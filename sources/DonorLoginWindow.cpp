@@ -2,27 +2,39 @@
 #include "ui_DonorLoginWindow.h"
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QDebug>
+#include "DonorRegisterWindow.h"
+#include "DonorDashboardWindow.h"
 
-DonorLoginWindow::DonorLoginWindow(QWidget *parent)
+DonorLoginWindow::DonorLoginWindow(DatabaseManager* db, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::DonorLoginWindow),
-    dbManager(new DatabaseManager()),
+    dbManager(db),
     registerWindow(nullptr),
-    dashboardWindow(nullptr)
-{
-    ui->setupUi(this);
+    dashboardWindow(nullptr) {
+    qDebug() << "Starting DonorLoginWindow constructor";
+    try {
+        ui->setupUi(this);
+        qDebug() << "UI setup completed successfully";
+    } catch (const std::exception& e) {
+        qDebug() << "UI setup failed:" << e.what();
+        QMessageBox::critical(this, "UI Error", "Failed to initialize UI: " + QString(e.what()));
+        throw;
+    }
+
+    qDebug() << "Setting up signal-slot connections";
+    connect(ui->loginButton, &QPushButton::clicked, this, &DonorLoginWindow::on_loginButton_clicked);
+    connect(ui->registerButton, &QPushButton::clicked, this, &DonorLoginWindow::on_registerButton_clicked);
+    qDebug() << "DonorLoginWindow constructor completed";
 }
 
-DonorLoginWindow::~DonorLoginWindow()
-{
+DonorLoginWindow::~DonorLoginWindow() {
+    qDebug() << "Destroying DonorLoginWindow";
     delete ui;
-    delete dbManager;
-    delete registerWindow;
-    delete dashboardWindow;
+    // Do not delete dbManager; it is shared
 }
 
-void DonorLoginWindow::on_loginButton_clicked()
-{
+void DonorLoginWindow::on_loginButton_clicked() {
     QString username = ui->usernameEdit->text();
     QString password = ui->passwordEdit->text();
 
@@ -37,8 +49,7 @@ void DonorLoginWindow::on_loginButton_clicked()
     }
 }
 
-void DonorLoginWindow::on_registerButton_clicked()
-{
+void DonorLoginWindow::on_registerButton_clicked() {
     if (!registerWindow) {
         registerWindow = new DonorRegisterWindow(this);
     }
@@ -46,10 +57,9 @@ void DonorLoginWindow::on_registerButton_clicked()
     this->hide();
 }
 
-void DonorLoginWindow::closeEvent(QCloseEvent *event)
-{
+void DonorLoginWindow::closeEvent(QCloseEvent* event) {
     if (parentWidget()) {
-        parentWidget()->show();  // Re-show WelcomeWindow
+        parentWidget()->show();
     }
     event->accept();
 }

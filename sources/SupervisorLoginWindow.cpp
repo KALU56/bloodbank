@@ -2,25 +2,36 @@
 #include "ui_SupervisorLoginWindow.h"
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QDebug>
+#include "SupervisorDashboardWindow.h"
 
-SupervisorLoginWindow::SupervisorLoginWindow(QWidget *parent)
+SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorLoginWindow),
-    dbManager(new DatabaseManager()),
-    dashboardWindow(nullptr)
-{
-    ui->setupUi(this);
+    dbManager(db),
+    dashboardWindow(nullptr) {
+    qDebug() << "Starting SupervisorLoginWindow constructor";
+    try {
+        ui->setupUi(this);
+        qDebug() << "UI setup completed successfully";
+    } catch (const std::exception& e) {
+        qDebug() << "UI setup failed:" << e.what();
+        QMessageBox::critical(this, "UI Error", "Failed to initialize UI: " + QString(e.what()));
+        throw;
+    }
+
+    qDebug() << "Setting up signal-slot connections";
+    connect(ui->loginButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_loginButton_clicked);
+    qDebug() << "SupervisorLoginWindow constructor completed";
 }
 
-SupervisorLoginWindow::~SupervisorLoginWindow()
-{
+SupervisorLoginWindow::~SupervisorLoginWindow() {
+    qDebug() << "Destroying SupervisorLoginWindow";
     delete ui;
-    delete dbManager;
-    delete dashboardWindow;
+    // Do not delete dbManager; it is shared
 }
 
-void SupervisorLoginWindow::on_loginButton_clicked()
-{
+void SupervisorLoginWindow::on_loginButton_clicked() {
     QString username = ui->usernameEdit->text();
     QString password = ui->passwordEdit->text();
 
@@ -35,10 +46,9 @@ void SupervisorLoginWindow::on_loginButton_clicked()
     }
 }
 
-void SupervisorLoginWindow::closeEvent(QCloseEvent *event)
-{
+void SupervisorLoginWindow::closeEvent(QCloseEvent* event) {
     if (parentWidget()) {
-        parentWidget()->show();  // Re-show WelcomeWindow
+        parentWidget()->show();
     }
     event->accept();
 }

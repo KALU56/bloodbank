@@ -3,19 +3,19 @@
 
 #include <QMainWindow>
 #include "DatabaseManager.h"
-#include "DonorLoginWindow.h"
-#include "SupervisorLoginWindow.h"
 
 namespace Ui {
 class WelcomeWindow;
 }
 
-class WelcomeWindow : public QMainWindow
-{
+class DonorLoginWindow;
+class SupervisorLoginWindow;
+
+class WelcomeWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit WelcomeWindow(QWidget *parent = nullptr);
+    explicit WelcomeWindow(QWidget* parent = nullptr);
     ~WelcomeWindow();
 
 private slots:
@@ -23,10 +23,10 @@ private slots:
     void onSupervisorButtonClicked();
 
 private:
-    Ui::WelcomeWindow *ui;
+    Ui::WelcomeWindow* ui;
     DatabaseManager dbManager;
-    DonorLoginWindow *donorLoginWindow;
-    SupervisorLoginWindow *supervisorLoginWindow;
+    DonorLoginWindow* donorLoginWindow;
+    SupervisorLoginWindow* supervisorLoginWindow;
 };
 
 #endif // WELCOMEWINDOW_H

@@ -1,29 +1,27 @@
 #include "DonorDashboardWindow.h"
 #include "ui_DonorDashboardWindow.h"
 
-DonorDashboardWindow::DonorDashboardWindow(const QString& username, QWidget *parent)
+DonorDashboardWindow::DonorDashboardWindow(const QString& username, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::DonorDashboardWindow),
     dbManager(new DatabaseManager()),
-    username(username)
-{
+    username(username) {
     ui->setupUi(this);
     loadMedicalHistory();
     loadHealthHistory();
 }
 
-DonorDashboardWindow::~DonorDashboardWindow()
-{
+DonorDashboardWindow::~DonorDashboardWindow() {
     delete ui;
     delete dbManager;
 }
 
-void DonorDashboardWindow::loadMedicalHistory()
-{
+void DonorDashboardWindow::loadMedicalHistory() {
     Donor donor = dbManager->getDonorByUsername(username);
     QVector<MedicalHistory> history = dbManager->getMedicalHistory(donor.id);
     ui->medicalTable->setRowCount(history.size());
-    ui->medicalTable->setColumnCount(5); // Ensure table has correct columns
+    ui->medicalTable->setColumnCount(5);
+    ui->medicalTable->setHorizontalHeaderLabels({"HIV Status", "Syphilis Status", "Hepatitis Status", "Sugar Level", "Message"});
 
     for (int i = 0; i < history.size(); ++i) {
         ui->medicalTable->setItem(i, 0, new QTableWidgetItem(history[i].hivStatus ? "Positive" : "Negative"));
@@ -34,12 +32,12 @@ void DonorDashboardWindow::loadMedicalHistory()
     }
 }
 
-void DonorDashboardWindow::loadHealthHistory()
-{
+void DonorDashboardWindow::loadHealthHistory() {
     Donor donor = dbManager->getDonorByUsername(username);
     QVector<HealthHistory> history = dbManager->getHealthHistory(donor.id);
     ui->healthTable->setRowCount(history.size());
-    ui->healthTable->setColumnCount(6); // Ensure table has correct columns
+    ui->healthTable->setColumnCount(6);
+    ui->healthTable->setHorizontalHeaderLabels({"Date", "Weight", "Blood Pressure", "Sugar Level", "Start Time", "End Time"});
 
     for (int i = 0; i < history.size(); ++i) {
         ui->healthTable->setItem(i, 0, new QTableWidgetItem(history[i].date));

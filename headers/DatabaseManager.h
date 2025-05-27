@@ -1,22 +1,29 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include <QSqlDatabase> // Core Qt SQL class for database connections
-#include <QDebug>       // For printing debug messages
+#include <QSqlDatabase>
+#include <QVector>
+#include "Donor.h"
+#include "MedicalHistory.h"
+#include "HealthHistory.h"
 
-class DatabaseManager
-{
+class DatabaseManager {
 public:
-    // Constructor: Initializes the database connection object
     DatabaseManager();
-    // Destructor: Closes the database connection if it's open
     ~DatabaseManager();
 
-    // Method to establish the database connection
     bool connect();
+    bool donorLogin(const QString& username, const QString& password);
+    bool supervisorLogin(const QString& username, const QString& password);
+    bool registerDonor(const Donor& donor, const QString& password);
+    Donor getDonorByUsername(const QString& username);
+    QVector<MedicalHistory> getMedicalHistory(const QString& donorId);
+    QVector<HealthHistory> getHealthHistory(const QString& donorId);
+    bool addMedicalHistory(const MedicalHistory& medical);
+    bool addHealthHistory(const HealthHistory& health);
 
 private:
-    QSqlDatabase db; // The Qt SQL database object
+    QSqlDatabase db;
 };
 
 #endif // DATABASEMANAGER_H

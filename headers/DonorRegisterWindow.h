@@ -3,28 +3,28 @@
 
 #include <QWidget>
 #include "DatabaseManager.h"
+#include "Donor.h"
 
 namespace Ui {
 class DonorRegisterWindow;
 }
 
-class DonorRegisterWindow : public QWidget
-{
+class DonorRegisterWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit DonorRegisterWindow(QWidget *parent = nullptr);
+    explicit DonorRegisterWindow(QWidget* parent = nullptr);
     ~DonorRegisterWindow();
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void on_submitButton_clicked();
 
 private:
-    Ui::DonorRegisterWindow *ui;
-    DatabaseManager *dbManager;
+    Ui::DonorRegisterWindow* ui;
+    DatabaseManager* dbManager;
 };
 
 #endif // DONORREGISTERWINDOW_H

@@ -3,17 +3,19 @@
 
 #include <QWidget>
 #include "DatabaseManager.h"
+#include "Donor.h"
+#include "MedicalHistory.h"
+#include "HealthHistory.h"
 
 namespace Ui {
 class SupervisorFormsWindow;
 }
 
-class SupervisorFormsWindow : public QWidget
-{
+class SupervisorFormsWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit SupervisorFormsWindow(QWidget *parent = nullptr);
+    explicit SupervisorFormsWindow(QWidget* parent = nullptr);
     ~SupervisorFormsWindow();
 
 private slots:
@@ -21,8 +23,8 @@ private slots:
     void on_healthSubmitButton_clicked();
 
 private:
-    Ui::SupervisorFormsWindow *ui;
-    DatabaseManager *dbManager;
+    Ui::SupervisorFormsWindow* ui;
+    DatabaseManager* dbManager;
 };
 
 #endif // SUPERVISORFORMSWINDOW_H
