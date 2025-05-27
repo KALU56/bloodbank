@@ -12,79 +12,54 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Sql)
 # Enable Qt automatic processing
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON) # Keep this ON
+set(CMAKE_AUTOUIC ON)
 
-# --- ADD THIS LINE TO TELL AUTOUIC WHERE TO FIND .ui FILES ---
-# This tells AUTOUIC to look in the 'ui' directory for .ui files
-# corresponding to includes like "ui_WelcomeWindow.h"
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
-
-
-# Include directories
-include_directories(headers)
-
-# Collect source files
-set(SOURCES
-    main.cpp
-    sources/DatabaseManager.cpp
-    sources/DonorDashboardWindow.cpp
-    sources/DonorLoginWindow.cpp
-    sources/DonorRegisterWindow.cpp
-    sources/SupervisorDashboardWindow.cpp
-    sources/SupervisorFormsWindow.cpp
-    sources/SupervisorLoginWindow.cpp
-    sources/WelcomeWindow.cpp
+# --- Critical Fixes ---
+# 1. Set explicit paths for UIC processing
+set(CMAKE_AUTOUIC_SEARCH_PATHS
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui
 )
 
-# Collect header files
-set(HEADERS
-    headers/DatabaseManager.h
-    headers/DonorDashboardWindow.h
-    headers/DonorLoginWindow.h
-    headers/DonorRegisterWindow.h
-    headers/SupervisorDashboardWindow.h
-    headers/SupervisorFormsWindow.h
-    headers/SupervisorLoginWindow.h
-    headers/WelcomeWindow.h
+# 2. Use GLOB to automatically find all UI files
+file(GLOB UI_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui"
 )
 
-# Collect UI files (Qt Designer)
-# Keep this as it's still good practice to explicitly list them,
-# although the CMAKE_AUTOUIC_SEARCH_PATHS might make it redundant for simple cases.
-set(UIS
-    ui/DonorDashboardWindow.ui
-    ui/DonorLoginWindow.ui
-    ui/DonorRegisterWindow.ui
-    ui/SupervisorDashboardWindow.ui
-    ui/SupervisorFormsWindow.ui
-    ui/SupervisorLoginWindow.ui
-    ui/WelcomeWindow.ui
+# 3. Use GLOB for source files
+file(GLOB SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/sources/*.cpp"
 )
 
-# Database and schema files (optional for packaging, not compilation)
-set(DATABASE_FILES
-    database/schema_postgres.sql
+# 4. Include directories with full path
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/headers
 )
 
 # Add the executable target
 add_executable(${PROJECT_NAME}
     ${SOURCES}
-    ${HEADERS}
-    ${UIS}
-    database/schema_postgres.sql # Ensure .ui files are still part of the target's sources
+    ${UI_FILES}
 )
 
-# Link the necessary Qt libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Sql)
+# Link Qt libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Widgets
+    Qt6::Sql
+)
 
-# Copy the database folder to the build output directory after build
+# --- Optional But Recommended ---
+# 1. Set output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# 2. Database handling
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/database
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>/database
+    ${CMAKE_CURRENT_SOURCE_DIR}/database
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/database
 )
 
-# Install commands (optional)
+# 3. Installation (optional)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/database DESTINATION .)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION .)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/database DESTINATION .)
