@@ -1,6 +1,7 @@
 #include "DonorLoginWindow.h"
 #include "ui_DonorLoginWindow.h"
 #include <QMessageBox>
+#include <QCloseEvent>
 
 DonorLoginWindow::DonorLoginWindow(QWidget *parent)
     : QWidget(parent),
@@ -43,4 +44,12 @@ void DonorLoginWindow::on_registerButton_clicked()
     }
     registerWindow->show();
     this->hide();
+}
+
+void DonorLoginWindow::closeEvent(QCloseEvent *event)
+{
+    if (parentWidget()) {
+        parentWidget()->show();  // Re-show WelcomeWindow
+    }
+    event->accept();
 }

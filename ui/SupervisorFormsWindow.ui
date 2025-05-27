@@ -3,170 +3,131 @@
  <class>SupervisorFormsWindow</class>
  <widget class="QWidget" name="SupervisorFormsWindow">
   <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>600</width>
-    <height>600</height>
-   </rect>
+   <rect><x>0</x><y>0</y><width>600</width><height>600</height></rect>
   </property>
-  <property name="windowTitle">
-   <string>Supervisor Forms</string>
-  </property>
+  <property name="windowTitle"><string>Supervisor Forms</string></property>
   <layout class="QVBoxLayout" name="verticalLayout">
 
-   <!-- Medical History Group -->
-   <widget class="QGroupBox" name="medicalGroupBox">
-    <property name="title">
-     <string>Medical History</string>
-    </property>
-    <layout class="QFormLayout" name="formLayout1">
-     <item row="0" column="0">
-      <widget class="QLabel" name="labelMedicalUsername">
-       <property name="text">
-        <string>Username</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="medicalUsernameEdit"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="hivCheckBox">
-       <property name="text">
-        <string>HIV Status</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QCheckBox" name="syphilisCheckBox">
-       <property name="text">
-        <string>Syphilis Status</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QCheckBox" name="hepatitisCheckBox">
-       <property name="text">
-        <string>Hepatitis Status</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="labelSugarLevel">
-       <property name="text">
-        <string>Sugar Level</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="sugarLevelEdit"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="labelMessage">
-       <property name="text">
-        <string>Message</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QTextEdit" name="messageEdit"/>
-     </item>
-     <item row="6" column="1">
-      <widget class="QPushButton" name="medicalSubmitButton">
-       <property name="text">
-        <string>Submit Medical History</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <item>
+    <widget class="QGroupBox" name="medicalGroupBox">
+     <property name="title"><string>Medical History</string></property>
+     <layout class="QFormLayout" name="formLayout1">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelMedicalUsername">
+        <property name="text"><string>Username</string></property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="medicalUsernameEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="hivCheckBox">
+        <property name="text"><string>HIV Status</string></property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="syphilisCheckBox">
+        <property name="text"><string>Syphilis Status</string></property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="hepatitisCheckBox">
+        <property name="text"><string>Hepatitis Status</string></property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelSugarLevel">
+        <property name="text"><string>Sugar Level</string></property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="sugarLevelEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelMessage">
+        <property name="text"><string>Message</string></property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QTextEdit" name="messageEdit"/>
+      </item>
+      <item row="6" column="1">
+       <widget class="QPushButton" name="medicalSubmitButton">
+        <property name="text"><string>Submit Medical History</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
 
-   <!-- Health History Group -->
-   <widget class="QGroupBox" name="healthGroupBox">
-    <property name="title">
-     <string>Health History</string>
-    </property>
-    <layout class="QFormLayout" name="formLayout2">
-     <item row="0" column="0">
-      <widget class="QLabel" name="labelHealthUsername">
-       <property name="text">
-        <string>Username</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="healthUsernameEdit"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="labelDate">
-       <property name="text">
-        <string>Date (YYYY-MM-DD)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="dateEdit"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="labelWeight">
-       <property name="text">
-        <string>Weight</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="weightEdit"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="labelBloodPressure">
-       <property name="text">
-        <string>Blood Pressure</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="bloodPressureEdit"/>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="labelHealthSugarLevel">
-       <property name="text">
-        <string>Sugar Level</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="healthSugarLevelEdit"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="labelStartTime">
-       <property name="text">
-        <string>Start Time (HH:MM)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="startTimeEdit"/>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="labelEndTime">
-       <property name="text">
-        <string>End Time (HH:MM)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="endTimeEdit"/>
-     </item>
-     <item row="7" column="1">
-      <widget class="QPushButton" name="healthSubmitButton">
-       <property name="text">
-        <string>Submit Health History</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <item>
+    <widget class="QGroupBox" name="healthGroupBox">
+     <property name="title"><string>Health History</string></property>
+     <layout class="QFormLayout" name="formLayout2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelHealthUsername">
+        <property name="text"><string>Username</string></property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="healthUsernameEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelDate">
+        <property name="text"><string>Date (YYYY-MM-DD)</string></property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="dateEdit"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelWeight">
+        <property name="text"><string>Weight</string></property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="weightEdit"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelBloodPressure">
+        <property name="text"><string>Blood Pressure</string></property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="bloodPressureEdit"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelHealthSugarLevel">
+        <property name="text"><string>Sugar Level</string></property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="healthSugarLevelEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelStartTime">
+        <property name="text"><string>Start Time (HH:MM)</string></property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="startTimeEdit"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelEndTime">
+        <property name="text"><string>End Time (HH:MM)</string></property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="endTimeEdit"/>
+      </item>
+      <item row="7" column="1">
+       <widget class="QPushButton" name="healthSubmitButton">
+        <property name="text"><string>Submit Health History</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
 
   </layout>
  </widget>

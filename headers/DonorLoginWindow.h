@@ -18,6 +18,9 @@ public:
     explicit DonorLoginWindow(QWidget *parent = nullptr);
     ~DonorLoginWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void on_loginButton_clicked();
     void on_registerButton_clicked();

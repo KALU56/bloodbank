@@ -1,28 +1,51 @@
-#ifndef DONORDASHBOARDWINDOW_H
-#define DONORDASHBOARDWINDOW_H
+#include "DonorLoginWindow.h"
+#include "ui_DonorLoginWindow.h"
+#include <QMessageBox>
 
-#include <QWidget>
-#include "DatabaseManager.h"
-
-namespace Ui {
-class DonorDashboardWindow;
+DonorLoginWindow::DonorLoginWindow(QWidget *parent)
+    : QWidget(parent),
+    ui(new Ui::DonorLoginWindow),
+    dbManager(new DatabaseManager()),
+    registerWindow(nullptr),
+    dashboardWindow(nullptr)
+{
+    ui->setupUi(this);
 }
 
-class DonorDashboardWindow : public QWidget
+DonorLoginWindow::~DonorLoginWindow()
 {
-    Q_OBJECT
+    delete ui;
+    delete dbManager;
+    delete registerWindow;
+    delete dashboardWindow;
+}
 
-public:
-    explicit DonorDashboardWindow(const QString& username, QWidget *parent = nullptr);
-    ~DonorDashboardWindow();
+void DonorLoginWindow::on_loginButton_clicked()
+{
+    QString username = ui->usernameEdit->text();
+    QString password = ui->passwordEdit->text();
 
-private:
-    void loadMedicalHistory();
-    void loadHealthHistory();
+    if (dbManager->donorLogin(username, password)) {
+        // Successful login
+        QMessageBox::information(this, "Login Successful", "Welcome, " + username + "!");
 
-    Ui::DonorDashboardWindow *ui;
-    DatabaseManager *dbManager;
-    QString username;
-};
+        // Create and show DonorDashboardWindow
+        if (!dashboardWindow) {
+            dashboardWindow = new DonorDashboardWindow(username, nullptr);  // Pass nullptr for main window
+        }
 
-#endif // DONORDASHBOARDWINDOW_H
+        dashboardWindow->show();
+        this->close();  // Close login window
+    } else {
+        QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
+    }
+}
+
+void DonorLoginWindow::on_registerButton_clicked()
+{
+    if (!registerWindow) {
+        registerWindow = new DonorRegisterWindow(this);  // Parent = this
+    }
+    registerWindow->show();
+    this->hide();  // Hide login window while registering
+}

@@ -1,6 +1,7 @@
 #include "SupervisorLoginWindow.h"
 #include "ui_SupervisorLoginWindow.h"
 #include <QMessageBox>
+#include <QCloseEvent>
 
 SupervisorLoginWindow::SupervisorLoginWindow(QWidget *parent)
     : QWidget(parent),
@@ -32,4 +33,12 @@ void SupervisorLoginWindow::on_loginButton_clicked()
     } else {
         QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
     }
+}
+
+void SupervisorLoginWindow::closeEvent(QCloseEvent *event)
+{
+    if (parentWidget()) {
+        parentWidget()->show();  // Re-show WelcomeWindow
+    }
+    event->accept();
 }

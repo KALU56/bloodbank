@@ -34,3 +34,4 @@ bool DatabaseManager::connect()
     qDebug() << "Database connected successfully!";
     return true; // Indicate successful connection
 }
+

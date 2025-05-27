@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "DatabaseManager.h"
-#include "DonorLoginWindow.h"
 
 namespace Ui {
 class DonorRegisterWindow;
@@ -17,13 +16,15 @@ public:
     explicit DonorRegisterWindow(QWidget *parent = nullptr);
     ~DonorRegisterWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void on_submitButton_clicked();
 
 private:
     Ui::DonorRegisterWindow *ui;
     DatabaseManager *dbManager;
-    DonorLoginWindow *loginWindow;
 };
 
 #endif // DONORREGISTERWINDOW_H

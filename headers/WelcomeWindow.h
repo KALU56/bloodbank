@@ -19,8 +19,8 @@ public:
     ~WelcomeWindow();
 
 private slots:
-    void on_donorButton_clicked();
-    void on_supervisorButton_clicked();
+    void onDonorButtonClicked();
+    void onSupervisorButtonClicked();
 
 private:
     Ui::WelcomeWindow *ui;

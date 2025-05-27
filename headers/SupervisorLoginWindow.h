@@ -17,6 +17,9 @@ public:
     explicit SupervisorLoginWindow(QWidget *parent = nullptr);
     ~SupervisorLoginWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void on_loginButton_clicked();
 

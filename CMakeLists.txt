@@ -6,7 +6,7 @@ project(BloodBankApp VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find required Qt6 components
+# Find Qt6 components
 find_package(Qt6 REQUIRED COMPONENTS Widgets Sql)
 
 # Enable Qt automatic processing
@@ -14,52 +14,74 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# --- Critical Fixes ---
-# 1. Set explicit paths for UIC processing
-set(CMAKE_AUTOUIC_SEARCH_PATHS
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui
+# Specify where to find .ui files
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+
+# Include directories
+include_directories(headers)
+
+# Source files
+set(SOURCES
+    main.cpp
+    sources/DatabaseManager.cpp
+    sources/DonorDashboardWindow.cpp
+    sources/DonorLoginWindow.cpp
+    sources/DonorRegisterWindow.cpp
+    sources/SupervisorDashboardWindow.cpp
+    sources/SupervisorFormsWindow.cpp
+    sources/SupervisorLoginWindow.cpp
+    sources/WelcomeWindow.cpp
 )
 
-# 2. Use GLOB to automatically find all UI files
-file(GLOB UI_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui"
+# Header files
+set(HEADERS
+    headers/Donor.h
+    headers/MedicalHistory.h
+    headers/HealthHistory.h
+    headers/DatabaseManager.h
+    headers/DonorDashboardWindow.h
+    headers/DonorLoginWindow.h
+    headers/DonorRegisterWindow.h
+    headers/SupervisorDashboardWindow.h
+    headers/SupervisorFormsWindow.h
+    headers/SupervisorLoginWindow.h
+    headers/WelcomeWindow.h
 )
 
-# 3. Use GLOB for source files
-file(GLOB SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/sources/*.cpp"
+# UI files
+set(UIS
+    ui/DonorDashboardWindow.ui
+    ui/DonorLoginWindow.ui
+    ui/DonorRegisterWindow.ui
+    ui/SupervisorDashboardWindow.ui
+    ui/SupervisorFormsWindow.ui
+    ui/SupervisorLoginWindow.ui
+    ui/WelcomeWindow.ui
 )
 
-# 4. Include directories with full path
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/headers
+# Database schema file
+set(DATABASE_FILES
+    database/schema_postgres.sql
 )
 
-# Add the executable target
+# Create executable
 add_executable(${PROJECT_NAME}
     ${SOURCES}
-    ${UI_FILES}
+    ${HEADERS}
+    ${UIS}
+    ${DATABASE_FILES}
 )
 
 # Link Qt libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    Qt6::Widgets
-    Qt6::Sql
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Sql)
 
-# --- Optional But Recommended ---
-# 1. Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-# 2. Database handling
+# Copy database folder to build directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}/database
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/database
+    ${CMAKE_SOURCE_DIR}/database
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/database
 )
 
-# 3. Installation (optional)
+# Install commands
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/database DESTINATION .)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/database DESTINATION .)
