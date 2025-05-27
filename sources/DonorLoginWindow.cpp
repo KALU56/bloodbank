@@ -41,9 +41,12 @@ void DonorLoginWindow::onLoginButtonClicked() {
 }
 
 void DonorLoginWindow::onRegisterButtonClicked() {
+    qDebug() << "Register button clicked";
     if (!registerWindow) {
+        qDebug() << "Creating new DonorRegisterWindow";
         registerWindow = new DonorRegisterWindow(this);
     }
+    qDebug() << "Showing DonorRegisterWindow";
     registerWindow->show();
     this->hide();
 }
