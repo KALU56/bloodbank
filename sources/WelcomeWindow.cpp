@@ -29,7 +29,7 @@ void WelcomeWindow::onDonorButtonClicked() {
     qDebug() << "Donor button clicked";
     if (!donorLoginWindow) {
         qDebug() << "Creating new DonorLoginWindow";
-        donorLoginWindow = new DonorLoginWindow(&dbManager, this);
+        donorLoginWindow = new DonorLoginWindow(&dbManager, nullptr);  // Parent = nullptr
     }
     qDebug() << "Showing DonorLoginWindow";
     donorLoginWindow->show();
@@ -41,10 +41,11 @@ void WelcomeWindow::onSupervisorButtonClicked() {
     qDebug() << "Supervisor button clicked";
     if (!supervisorLoginWindow) {
         qDebug() << "Creating new SupervisorLoginWindow";
-        supervisorLoginWindow = new SupervisorLoginWindow(&dbManager, this);
+        supervisorLoginWindow = new SupervisorLoginWindow(&dbManager, nullptr);  // <--- Parent is nullptr
     }
     qDebug() << "Showing SupervisorLoginWindow";
     supervisorLoginWindow->show();
     qDebug() << "Hiding WelcomeWindow";
     this->hide();
 }
+

@@ -11,7 +11,8 @@ class DonorLoginWindow;
 class DonorRegisterWindow;
 class DonorDashboardWindow;
 
-class DonorLoginWindow : public QWidget {
+class DonorLoginWindow : public QWidget
+{
     Q_OBJECT
 
 public:
@@ -22,11 +23,11 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void on_loginButton_clicked();
-    void on_registerButton_clicked();
+    void onLoginButtonClicked();       // ⬅ Add this
+    void onRegisterButtonClicked();    // ⬅ And this
 
 private:
-    Ui::DonorLoginWindow* ui;
+    Ui::DonorLoginWindow *ui;
     DatabaseManager* dbManager;
     DonorRegisterWindow* registerWindow;
     DonorDashboardWindow* dashboardWindow;
