@@ -1,15 +1,16 @@
+```cpp
 #include "SupervisorLoginWindow.h"
 #include "ui_SupervisorLoginWindow.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDebug>
-#include "SupervisorDashboardWindow.h"
+#include "SupervisorChoiceWindow.h"
 
 SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorLoginWindow),
     dbManager(db),
-    dashboardWindow(nullptr) {
+    choiceWindow(nullptr) {
     qDebug() << "Starting SupervisorLoginWindow constructor";
     try {
         ui->setupUi(this);
@@ -29,18 +30,21 @@ SupervisorLoginWindow::~SupervisorLoginWindow() {
     qDebug() << "Destroying SupervisorLoginWindow";
     delete ui;
     // Do not delete dbManager; it is shared
+    delete choiceWindow;
 }
 
 void SupervisorLoginWindow::on_loginButton_clicked() {
     QString username = ui->usernameEdit->text().trimmed();
     QString password = ui->passwordEdit->text().trimmed();
 
-
     if (dbManager->supervisorLogin(username, password)) {
-        if (!dashboardWindow) {
-            dashboardWindow = new SupervisorDashboardWindow(username, this);
+        qDebug() << "Login successful for" << username;
+        if (!choiceWindow) {
+            choiceWindow = new SupervisorChoiceWindow(username, dbManager, nullptr);
         }
-        dashboardWindow->show();
+        choiceWindow->show();
+        choiceWindow->raise();
+        choiceWindow->activateWindow();
         this->hide();
     } else {
         QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
@@ -53,3 +57,4 @@ void SupervisorLoginWindow::closeEvent(QCloseEvent* event) {
     }
     event->accept();
 }
+```

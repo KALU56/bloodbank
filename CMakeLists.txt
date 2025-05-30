@@ -28,8 +28,9 @@ set(SOURCES
     sources/DonorLoginWindow.cpp
     sources/DonorRegisterWindow.cpp
     sources/SupervisorDashboardWindow.cpp
-    sources/SupervisorFormsWindow.cpp
     sources/SupervisorLoginWindow.cpp
+    sources/SupervisorFormsWindow.cpp
+    sources/SupervisorChoiceWindow.cpp
     sources/WelcomeWindow.cpp
 )
 
@@ -45,6 +46,7 @@ set(HEADERS
     headers/SupervisorDashboardWindow.h
     headers/SupervisorFormsWindow.h
     headers/SupervisorLoginWindow.h
+    headers/SupervisorChoiceWindow.h
     headers/WelcomeWindow.h
 )
 
@@ -56,6 +58,7 @@ set(UIS
     ui/SupervisorDashboardWindow.ui
     ui/SupervisorFormsWindow.ui
     ui/SupervisorLoginWindow.ui
+    ui/SupervisorChoiceWindow.ui
     ui/WelcomeWindow.ui
 )
 

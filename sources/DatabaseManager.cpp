@@ -3,14 +3,27 @@
 #include <QSqlError>
 #include <QDebug>
 
-DatabaseManager::DatabaseManager() {
-    db = QSqlDatabase::addDatabase("QPSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("bloodbanksystem");
-    db.setUserName("postgres");
-    db.setPassword("kaluLILUYA#1");
+// Singleton accessor
+DatabaseManager& DatabaseManager::instance() {
+    static DatabaseManager instance;
+    return instance;
 }
 
+// Private constructor
+DatabaseManager::DatabaseManager() {
+    QString connectionName = "BloodBankConnection";  // Unique name
+    if (QSqlDatabase::contains(connectionName)) {
+        db = QSqlDatabase::database(connectionName);
+    } else {
+        db = QSqlDatabase::addDatabase("QPSQL", connectionName);
+        db.setHostName("localhost");
+        db.setDatabaseName("bloodbanksystem");
+        db.setUserName("postgres");
+        db.setPassword("kaluLILUYA#1");
+    }
+}
+
+// Destructor
 DatabaseManager::~DatabaseManager() {
     if (db.isOpen()) {
         db.close();
@@ -18,16 +31,18 @@ DatabaseManager::~DatabaseManager() {
 }
 
 bool DatabaseManager::connect() {
-    if (!db.open()) {
-        qDebug() << "Database connection failed:" << db.lastError().text();
-        return false;
+    if (!db.isOpen()) {
+        if (!db.open()) {
+            qDebug() << "Database connection failed:" << db.lastError().text();
+            return false;
+        }
+        qDebug() << "Database connected successfully!";
     }
-    qDebug() << "Database connected successfully!";
     return true;
 }
 
 bool DatabaseManager::donorLogin(const QString& username, const QString& password) {
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("SELECT * FROM donors WHERE username = :username AND password = :password");
     query.bindValue(":username", username);
     query.bindValue(":password", password);
@@ -41,7 +56,7 @@ bool DatabaseManager::donorLogin(const QString& username, const QString& passwor
 bool DatabaseManager::supervisorLogin(const QString& username, const QString& password) {
     qDebug() << "Attempting login for username:" << username << "password:" << password;
 
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("SELECT COUNT(*) FROM supervisors WHERE username = ? AND password = ?");
     query.addBindValue(username);
     query.addBindValue(password);
@@ -61,9 +76,8 @@ bool DatabaseManager::supervisorLogin(const QString& username, const QString& pa
     return false;
 }
 
-
 bool DatabaseManager::registerDonor(const Donor& donor, const QString& password) {
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("INSERT INTO donors (id, first_name, last_name, gender, phone, username, blood_type, region, woreda, kebele, city, password) "
                   "VALUES (:id, :firstName, :lastName, :gender, :phone, :username, :bloodType, :region, :woreda, :kebele, :city, :password)");
     query.bindValue(":id", donor.id);
@@ -87,7 +101,7 @@ bool DatabaseManager::registerDonor(const Donor& donor, const QString& password)
 
 Donor DatabaseManager::getDonorByUsername(const QString& username) {
     Donor donor;
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("SELECT * FROM donors WHERE username = :username");
     query.bindValue(":username", username);
     if (query.exec() && query.next()) {
@@ -108,7 +122,7 @@ Donor DatabaseManager::getDonorByUsername(const QString& username) {
 
 QVector<MedicalHistory> DatabaseManager::getMedicalHistory(const QString& donorId) {
     QVector<MedicalHistory> history;
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("SELECT * FROM medical_history WHERE donor_id = :donorId");
     query.bindValue(":donorId", donorId);
     if (query.exec()) {
@@ -130,7 +144,7 @@ QVector<MedicalHistory> DatabaseManager::getMedicalHistory(const QString& donorI
 
 QVector<HealthHistory> DatabaseManager::getHealthHistory(const QString& donorId) {
     QVector<HealthHistory> history;
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("SELECT * FROM health_history WHERE donor_id = :donorId");
     query.bindValue(":donorId", donorId);
     if (query.exec()) {
@@ -152,7 +166,7 @@ QVector<HealthHistory> DatabaseManager::getHealthHistory(const QString& donorId)
 }
 
 bool DatabaseManager::addMedicalHistory(const MedicalHistory& medical) {
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("INSERT INTO medical_history (donor_id, hiv_status, syphilis_status, hepatitis_status, sugar_level, message) "
                   "VALUES (:donorId, :hivStatus, :syphilisStatus, :hepatitisStatus, :sugarLevel, :message)");
     query.bindValue(":donorId", medical.donorId);
@@ -169,7 +183,7 @@ bool DatabaseManager::addMedicalHistory(const MedicalHistory& medical) {
 }
 
 bool DatabaseManager::addHealthHistory(const HealthHistory& health) {
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("INSERT INTO health_history (donor_id, date, weight, blood_pressure, sugar_level, start_time, end_time) "
                   "VALUES (:donorId, :date, :weight, :bloodPressure, :sugarLevel, :startTime, :endTime)");
     query.bindValue(":donorId", health.donorId);

@@ -8,7 +8,7 @@ namespace Ui {
 class SupervisorLoginWindow;
 }
 
-class SupervisorDashboardWindow;
+class SupervisorChoiceWindow;
 
 class SupervisorLoginWindow : public QWidget {
     Q_OBJECT
@@ -26,7 +26,7 @@ private slots:
 private:
     Ui::SupervisorLoginWindow* ui;
     DatabaseManager* dbManager;
-    SupervisorDashboardWindow* dashboardWindow;
+    SupervisorChoiceWindow* choiceWindow;
 };
 
 #endif // SUPERVISORLOGINWINDOW_H

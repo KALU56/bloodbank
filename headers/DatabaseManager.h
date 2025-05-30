@@ -9,6 +9,9 @@
 
 class DatabaseManager {
 public:
+    // Singleton accessor (add this line)
+    static DatabaseManager& instance();
+
     DatabaseManager();
     ~DatabaseManager();
 
@@ -24,6 +27,10 @@ public:
 
 private:
     QSqlDatabase db;
+
+    // Make the constructor/destructor private or protected for proper singleton
+    // In your case, since the constructor is public, you might want to change it
+    // But if you leave it public, be aware users can still create other instances.
 };
 
 #endif // DATABASEMANAGER_H
