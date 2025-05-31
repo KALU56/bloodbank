@@ -2,6 +2,7 @@
 #define SUPERVISORLOGINWINDOW_H
 
 #include <QWidget>
+#include <QCloseEvent>          // Added include
 #include "DatabaseManager.h"
 
 namespace Ui {
@@ -9,7 +10,7 @@ class SupervisorLoginWindow;
 }
 
 class SupervisorChoiceWindow;
-class WelcomeWindow; // Forward declaration
+class WelcomeWindow;            // Forward declaration
 
 class SupervisorLoginWindow : public QWidget {
     Q_OBJECT
@@ -29,7 +30,7 @@ private:
     Ui::SupervisorLoginWindow* ui;
     DatabaseManager* dbManager;
     SupervisorChoiceWindow* choiceWindow;
-    WelcomeWindow* welcomeWindow; // Reference to the parent welcome window
+    WelcomeWindow* welcomeWindow;
 };
 
 #endif // SUPERVISORLOGINWINDOW_H

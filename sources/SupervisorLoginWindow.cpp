@@ -1,10 +1,10 @@
 #include "SupervisorLoginWindow.h"
 #include "ui_SupervisorLoginWindow.h"
 #include "SupervisorChoiceWindow.h"
+#include "WelcomeWindow.h"          // Added include
 #include <QMessageBox>
-#include <QCloseEvent>
+#include <QCloseEvent>              // Added include
 #include <QDebug>
-#include "WelcomeWindow.h"
 
 SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, WelcomeWindow* parent)
     : QWidget(parent),
@@ -12,33 +12,40 @@ SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, WelcomeWindow*
     dbManager(db),
     choiceWindow(nullptr),
     welcomeWindow(parent) {
-    qDebug() << "Starting SupervisorLoginWindow constructor";
-    try {
-        ui->setupUi(this);
-        qDebug() << "UI setup completed successfully";
-    } catch (const std::exception& e) {
-        qDebug() << "UI setup failed:" << e.what();
-        QMessageBox::critical(this, "UI Error", "Failed to initialize UI: " + QString(e.what()));
-        throw;
+    qDebug() << "Initializing SupervisorLoginWindow";
+    ui->setupUi(this);
+
+    // Verify UI components
+    if (!ui->loginButton || !ui->backButton || !ui->usernameEdit || !ui->passwordEdit) {
+        qDebug() << "Error: One or more UI components are null";
+        QMessageBox::critical(this, "UI Error", "Failed to initialize UI components.");
+        return;
     }
 
     connect(ui->loginButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_loginButton_clicked);
     connect(ui->backButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_backButton_clicked);
-    qDebug() << "SupervisorLoginWindow constructor completed";
+    qDebug() << "SupervisorLoginWindow initialized successfully";
 }
 
 SupervisorLoginWindow::~SupervisorLoginWindow() {
     qDebug() << "Destroying SupervisorLoginWindow";
-    delete ui;
     delete choiceWindow;
+    delete ui;
 }
 
 void SupervisorLoginWindow::on_loginButton_clicked() {
+    qDebug() << "Supervisor login button clicked";
     QString username = ui->usernameEdit->text().trimmed();
     QString password = ui->passwordEdit->text().trimmed();
 
+    if (username.isEmpty() || password.isEmpty()) {
+        qDebug() << "Login failed: Username or password is empty";
+        QMessageBox::warning(this, "Login Failed", "Please enter both username and password.");
+        return;
+    }
+
     if (dbManager->supervisorLogin(username, password)) {
-        qDebug() << "Login successful for" << username;
+        qDebug() << "Login successful for supervisor:" << username;
         if (!choiceWindow) {
             choiceWindow = new SupervisorChoiceWindow(username, dbManager, this);
         }
@@ -47,11 +54,13 @@ void SupervisorLoginWindow::on_loginButton_clicked() {
         choiceWindow->activateWindow();
         this->hide();
     } else {
+        qDebug() << "Login failed: Invalid credentials for" << username;
         QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
     }
 }
 
 void SupervisorLoginWindow::on_backButton_clicked() {
+    qDebug() << "Supervisor login back button clicked";
     if (welcomeWindow) {
         welcomeWindow->show();
         welcomeWindow->raise();
@@ -61,8 +70,11 @@ void SupervisorLoginWindow::on_backButton_clicked() {
 }
 
 void SupervisorLoginWindow::closeEvent(QCloseEvent* event) {
+    qDebug() << "SupervisorLoginWindow close event";
     if (welcomeWindow) {
         welcomeWindow->show();
+        welcomeWindow->raise();
+        welcomeWindow->activateWindow();
     }
     event->accept();
 }

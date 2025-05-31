@@ -2,7 +2,7 @@
 #define SUPERVISORCHOICEWINDOW_H
 
 #include <QWidget>
-#include <QCloseEvent>
+#include <QCloseEvent>          // Added include
 #include "DatabaseManager.h"
 
 namespace Ui {
@@ -11,7 +11,7 @@ class SupervisorChoiceWindow;
 
 class SupervisorDashboardWindow;
 class SupervisorFormsWindow;
-class SupervisorLoginWindow;
+class SupervisorLoginWindow;    // Forward declaration
 
 class SupervisorChoiceWindow : public QWidget {
     Q_OBJECT
