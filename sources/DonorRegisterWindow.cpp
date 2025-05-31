@@ -3,14 +3,17 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QUuid>
+#include "DonorLoginWindow.h"
 
-DonorRegisterWindow::DonorRegisterWindow(DatabaseManager* db, QWidget* parent)
+DonorRegisterWindow::DonorRegisterWindow(DatabaseManager* db, DonorLoginWindow* parent)
     : QWidget(parent),
     ui(new Ui::DonorRegisterWindow),
-    dbManager(db)
+    dbManager(db),
+    loginWindow(parent)
 {
     ui->setupUi(this);
     connect(ui->submitButton, &QPushButton::clicked, this, &DonorRegisterWindow::on_submitButton_clicked);
+    connect(ui->backButton, &QPushButton::clicked, this, &DonorRegisterWindow::on_backButton_clicked);
 }
 
 DonorRegisterWindow::~DonorRegisterWindow() {
@@ -39,18 +42,29 @@ void DonorRegisterWindow::on_submitButton_clicked() {
 
     if (dbManager->registerDonor(donor, password)) {
         QMessageBox::information(this, "Success", "Registration successful! Please log in.");
-        this->close();
+        if (loginWindow) {
+            loginWindow->show();
+            loginWindow->raise();
+            loginWindow->activateWindow();
+        }
+        this->hide();
     } else {
         QMessageBox::warning(this, "Registration Failed", "Username already exists or database error.");
     }
 }
 
+void DonorRegisterWindow::on_backButton_clicked() {
+    if (loginWindow) {
+        loginWindow->show();
+        loginWindow->raise();
+        loginWindow->activateWindow();
+    }
+    this->hide();
+}
+
 void DonorRegisterWindow::closeEvent(QCloseEvent* event) {
-    if (parentWidget()) {
-        parentWidget()->show();
-    } else {
-        // Ensure DonorLoginWindow reappears if we close this window
-        // You can emit a signal here if you want to notify the main window
+    if (loginWindow) {
+        loginWindow->show();
     }
     event->accept();
 }

@@ -5,18 +5,21 @@
 #include <QDebug>
 #include "DonorRegisterWindow.h"
 #include "DonorDashboardWindow.h"
+#include "WelcomeWindow.h"
 
-DonorLoginWindow::DonorLoginWindow(DatabaseManager* db, QWidget* parent)
+DonorLoginWindow::DonorLoginWindow(DatabaseManager* db, WelcomeWindow* parent)
     : QWidget(parent),
     ui(new Ui::DonorLoginWindow),
     dbManager(db),
     registerWindow(nullptr),
-    dashboardWindow(nullptr)
+    dashboardWindow(nullptr),
+    welcomeWindow(parent)
 {
     qDebug() << "Starting DonorLoginWindow constructor";
     ui->setupUi(this);
     connect(ui->loginButton, &QPushButton::clicked, this, &DonorLoginWindow::onLoginButtonClicked);
     connect(ui->registerButton, &QPushButton::clicked, this, &DonorLoginWindow::onRegisterButtonClicked);
+    connect(ui->backButton, &QPushButton::clicked, this, &DonorLoginWindow::on_backButton_clicked);
     qDebug() << "DonorLoginWindow constructor completed";
 }
 
@@ -31,7 +34,7 @@ void DonorLoginWindow::onLoginButtonClicked() {
     if (dbManager->donorLogin(username, password)) {
         qDebug() << "Login successful for" << username;
         if (!dashboardWindow) {
-            dashboardWindow = new DonorDashboardWindow(username, nullptr);  // No parent to make it independent
+            dashboardWindow = new DonorDashboardWindow(username, this);
         }
         dashboardWindow->show();
         dashboardWindow->raise();
@@ -46,7 +49,7 @@ void DonorLoginWindow::onRegisterButtonClicked() {
     qDebug() << "Register button clicked";
     if (!registerWindow) {
         qDebug() << "Creating new DonorRegisterWindow";
-        registerWindow = new DonorRegisterWindow(dbManager, nullptr);  // Use nullptr to make it a top-level window
+        registerWindow = new DonorRegisterWindow(dbManager, this);
     }
     qDebug() << "Showing DonorRegisterWindow";
     registerWindow->show();
@@ -56,9 +59,18 @@ void DonorLoginWindow::onRegisterButtonClicked() {
     this->hide();
 }
 
+void DonorLoginWindow::on_backButton_clicked() {
+    if (welcomeWindow) {
+        welcomeWindow->show();
+        welcomeWindow->raise();
+        welcomeWindow->activateWindow();
+    }
+    this->hide();
+}
+
 void DonorLoginWindow::closeEvent(QCloseEvent* event) {
-    if (parentWidget()) {
-        parentWidget()->show();
+    if (welcomeWindow) {
+        welcomeWindow->show();
     }
     event->accept();
 }

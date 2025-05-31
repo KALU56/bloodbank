@@ -3,32 +3,171 @@
  <class>DonorRegisterWindow</class>
  <widget class="QWidget" name="DonorRegisterWindow">
   <property name="geometry">
-   <rect><x>0</x><y>0</y><width>400</width><height>600</height></rect>
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>600</height>
+   </rect>
   </property>
-  <property name="windowTitle"><string>Donor Registration</string></property>
+  <property name="windowTitle">
+   <string>Donor Registration</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item><widget class="QLabel" name="labelTitle"><property name="text"><string>Donor Registration</string></property><property name="alignment"><set>Qt::AlignCenter</set></property><property name="font"><font><pointsize>16</pointsize><bold>true</bold></font></property></widget></item>
-   <item><widget class="QLineEdit" name="firstNameEdit"><property name="placeholderText"><string>First Name</string></property></widget></item>
-   <item><widget class="QLineEdit" name="lastNameEdit"><property name="placeholderText"><string>Last Name</string></property></widget></item>
-   <item><widget class="QComboBox" name="genderCombo"><item><property name="text"><string>Male</string></property></item><item><property name="text"><string>Female</string></property></item></widget></item>
-   <item><widget class="QLineEdit" name="phoneEdit"><property name="placeholderText"><string>Phone</string></property></widget></item>
-   <item><widget class="QLineEdit" name="usernameEdit"><property name="placeholderText"><string>Username</string></property></widget></item>
-   <item><widget class="QLineEdit" name="passwordEdit"><property name="placeholderText"><string>Password</string></property><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item>
-   <item><widget class="QComboBox" name="bloodTypeCombo">
-    <item><property name="text"><string>A+</string></property></item>
-    <item><property name="text"><string>A-</string></property></item>
-    <item><property name="text"><string>B+</string></property></item>
-    <item><property name="text"><string>B-</string></property></item>
-    <item><property name="text"><string>AB+</string></property></item>
-    <item><property name="text"><string>AB-</string></property></item>
-    <item><property name="text"><string>O+</string></property></item>
-    <item><property name="text"><string>O-</string></property></item>
-   </widget></item>
-   <item><widget class="QLineEdit" name="regionEdit"><property name="placeholderText"><string>Region</string></property></widget></item>
-   <item><widget class="QLineEdit" name="woredaEdit"><property name="placeholderText"><string>Woreda</string></property></widget></item>
-   <item><widget class="QLineEdit" name="kebeleEdit"><property name="placeholderText"><string>Kebele</string></property></widget></item>
-   <item><widget class="QLineEdit" name="cityEdit"><property name="placeholderText"><string>City</string></property></widget></item>
-   <item><widget class="QPushButton" name="submitButton"><property name="text"><string>Submit</string></property></widget></item>
+   <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Donor Registration</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="backButton">
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="firstNameEdit">
+     <property name="placeholderText">
+      <string>First Name</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lastNameEdit">
+     <property name="placeholderText">
+      <string>Last Name</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="genderCombo">
+     <item>
+      <property name="text">
+       <string>Male</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Female</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="phoneEdit">
+     <property name="placeholderText">
+      <string>Phone</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="usernameEdit">
+     <property name="placeholderText">
+      <string>Username</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="passwordEdit">
+     <property name="echoMode">
+      <enum>QLineEdit::EchoMode::Password</enum>
+     </property>
+     <property name="placeholderText">
+      <string>Password</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="bloodTypeCombo">
+     <item>
+      <property name="text">
+       <string>A+</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A-</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>B+</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>B-</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AB+</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AB-</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>O+</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>O-</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="regionEdit">
+     <property name="placeholderText">
+      <string>Region</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="woredaEdit">
+     <property name="placeholderText">
+      <string>Woreda</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="kebeleEdit">
+     <property name="placeholderText">
+      <string>Kebele</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="cityEdit">
+     <property name="placeholderText">
+      <string>City</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="submitButton">
+     <property name="text">
+      <string>Submit</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

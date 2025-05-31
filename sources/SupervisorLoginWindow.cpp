@@ -4,12 +4,14 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDebug>
+#include "WelcomeWindow.h"
 
-SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* parent)
+SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, WelcomeWindow* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorLoginWindow),
     dbManager(db),
-    choiceWindow(nullptr) {
+    choiceWindow(nullptr),
+    welcomeWindow(parent) {
     qDebug() << "Starting SupervisorLoginWindow constructor";
     try {
         ui->setupUi(this);
@@ -21,6 +23,7 @@ SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* paren
     }
 
     connect(ui->loginButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_loginButton_clicked);
+    connect(ui->backButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_backButton_clicked);
     qDebug() << "SupervisorLoginWindow constructor completed";
 }
 
@@ -37,7 +40,7 @@ void SupervisorLoginWindow::on_loginButton_clicked() {
     if (dbManager->supervisorLogin(username, password)) {
         qDebug() << "Login successful for" << username;
         if (!choiceWindow) {
-            choiceWindow = new SupervisorChoiceWindow(username, dbManager, nullptr);
+            choiceWindow = new SupervisorChoiceWindow(username, dbManager, this);
         }
         choiceWindow->show();
         choiceWindow->raise();
@@ -48,9 +51,18 @@ void SupervisorLoginWindow::on_loginButton_clicked() {
     }
 }
 
+void SupervisorLoginWindow::on_backButton_clicked() {
+    if (welcomeWindow) {
+        welcomeWindow->show();
+        welcomeWindow->raise();
+        welcomeWindow->activateWindow();
+    }
+    this->hide();
+}
+
 void SupervisorLoginWindow::closeEvent(QCloseEvent* event) {
-    if (parentWidget()) {
-        parentWidget()->show();
+    if (welcomeWindow) {
+        welcomeWindow->show();
     }
     event->accept();
 }

@@ -2,25 +2,31 @@
 #include "ui_SupervisorDashboardWindow.h"
 #include <QMessageBox>
 #include "SupervisorFormsWindow.h"
+#include "SupervisorChoiceWindow.h"
 
-SupervisorDashboardWindow::SupervisorDashboardWindow(const QString& username, QWidget* parent)
+SupervisorDashboardWindow::SupervisorDashboardWindow(const QString& username, SupervisorChoiceWindow* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorDashboardWindow),
     dbManager(new DatabaseManager()),
     formsWindow(nullptr),
-    loggedInUsername(username) {
+    loggedInUsername(username),
+    choiceWindow(parent) {
     ui->setupUi(this);
+
     ui->donorTable->setColumnCount(5);
     ui->donorTable->setHorizontalHeaderLabels({"Username", "Blood Type", "Region", "Woreda", "Kebele"});
     ui->donorTable->horizontalHeader()->setStretchLastSection(true);
+
+    // Connect buttons to their slots
     connect(ui->searchButton, &QPushButton::clicked, this, &SupervisorDashboardWindow::on_searchButton_clicked);
     connect(ui->formsButton, &QPushButton::clicked, this, &SupervisorDashboardWindow::on_formsButton_clicked);
+    connect(ui->backButton, &QPushButton::clicked, this, &SupervisorDashboardWindow::on_backButton_clicked);
 }
 
 SupervisorDashboardWindow::~SupervisorDashboardWindow() {
     delete ui;
     delete dbManager;
-    delete formsWindow;
+    if (formsWindow) delete formsWindow;
 }
 
 void SupervisorDashboardWindow::on_searchButton_clicked() {
@@ -37,10 +43,22 @@ void SupervisorDashboardWindow::on_searchButton_clicked() {
 
 void SupervisorDashboardWindow::on_formsButton_clicked() {
     if (!formsWindow) {
+        // Pass 'this' as parent so the form window can return directly to the dashboard if needed
         formsWindow = new SupervisorFormsWindow(this);
     }
     formsWindow->show();
-    this->hide();
+    formsWindow->raise();
+    formsWindow->activateWindow();
+    this->hide();  // Hide dashboard window
+}
+
+void SupervisorDashboardWindow::on_backButton_clicked() {
+    if (choiceWindow) {
+        choiceWindow->show();
+        choiceWindow->raise();
+        choiceWindow->activateWindow();
+    }
+    this->hide();  // Hide dashboard window
 }
 
 void SupervisorDashboardWindow::displayDonor(const Donor& donor) {

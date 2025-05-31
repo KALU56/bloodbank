@@ -9,11 +9,13 @@ namespace Ui {
 class DonorRegisterWindow;
 }
 
+class DonorLoginWindow; // Forward declaration
+
 class DonorRegisterWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit DonorRegisterWindow(DatabaseManager* db, QWidget* parent = nullptr);
+    explicit DonorRegisterWindow(DatabaseManager* db, DonorLoginWindow* parent = nullptr);
     ~DonorRegisterWindow();
 
 protected:
@@ -21,10 +23,12 @@ protected:
 
 private slots:
     void on_submitButton_clicked();
+    void on_backButton_clicked();
 
 private:
     Ui::DonorRegisterWindow* ui;
     DatabaseManager* dbManager;
+    DonorLoginWindow* loginWindow; // Reference to the parent login window
 };
 
 #endif // DONORREGISTERWINDOW_H

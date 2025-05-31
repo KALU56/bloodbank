@@ -1,12 +1,15 @@
 #include "DonorDashboardWindow.h"
 #include "ui_DonorDashboardWindow.h"
+#include "DonorLoginWindow.h"
 
-DonorDashboardWindow::DonorDashboardWindow(const QString& username, QWidget* parent)
+DonorDashboardWindow::DonorDashboardWindow(const QString& username, DonorLoginWindow* parent)
     : QWidget(parent),
     ui(new Ui::DonorDashboardWindow),
     dbManager(new DatabaseManager()),
-    username(username) {
+    username(username),
+    loginWindow(parent) {
     ui->setupUi(this);
+    connect(ui->backButton, &QPushButton::clicked, this, &DonorDashboardWindow::on_backButton_clicked);
     loadMedicalHistory();
     loadHealthHistory();
 }
@@ -14,6 +17,15 @@ DonorDashboardWindow::DonorDashboardWindow(const QString& username, QWidget* par
 DonorDashboardWindow::~DonorDashboardWindow() {
     delete ui;
     delete dbManager;
+}
+
+void DonorDashboardWindow::on_backButton_clicked() {
+    if (loginWindow) {
+        loginWindow->show();
+        loginWindow->raise();
+        loginWindow->activateWindow();
+    }
+    this->hide();
 }
 
 void DonorDashboardWindow::loadMedicalHistory() {

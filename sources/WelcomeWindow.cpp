@@ -22,30 +22,31 @@ WelcomeWindow::WelcomeWindow(QWidget* parent)
 
 WelcomeWindow::~WelcomeWindow() {
     delete ui;
-    // No need to delete donorLoginWindow or supervisorLoginWindow; managed by parent
 }
 
 void WelcomeWindow::onDonorButtonClicked() {
     qDebug() << "Donor button clicked";
-    if (!donorLoginWindow) {
+    if (!donorLoginWindow || !donorLoginWindow->isVisible()) {
         qDebug() << "Creating new DonorLoginWindow";
-        donorLoginWindow = new DonorLoginWindow(&dbManager, nullptr);  // Parent = nullptr
+        if (donorLoginWindow) delete donorLoginWindow; // 🔥 Clean up old instance
+        donorLoginWindow = new DonorLoginWindow(&dbManager, this);
     }
-    qDebug() << "Showing DonorLoginWindow";
     donorLoginWindow->show();
-    qDebug() << "Hiding WelcomeWindow";
+    donorLoginWindow->raise();
+    donorLoginWindow->activateWindow();
     this->hide();
 }
 
 void WelcomeWindow::onSupervisorButtonClicked() {
     qDebug() << "Supervisor button clicked";
-    if (!supervisorLoginWindow) {
+    if (!supervisorLoginWindow || !supervisorLoginWindow->isVisible()) {
         qDebug() << "Creating new SupervisorLoginWindow";
-        supervisorLoginWindow = new SupervisorLoginWindow(&dbManager, nullptr);  // <--- Parent is nullptr
+        if (supervisorLoginWindow) delete supervisorLoginWindow; // 🔥 Clean up old instance
+        supervisorLoginWindow = new SupervisorLoginWindow(&dbManager, this);
     }
-    qDebug() << "Showing SupervisorLoginWindow";
     supervisorLoginWindow->show();
-    qDebug() << "Hiding WelcomeWindow";
+    supervisorLoginWindow->raise();
+    supervisorLoginWindow->activateWindow();
     this->hide();
 }
 

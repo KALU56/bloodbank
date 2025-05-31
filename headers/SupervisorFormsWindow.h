@@ -21,10 +21,12 @@ public:
 private slots:
     void on_medicalSubmitButton_clicked();
     void on_healthSubmitButton_clicked();
+    void on_backButton_clicked();
 
 private:
     Ui::SupervisorFormsWindow* ui;
     DatabaseManager* dbManager;
+    QWidget* parentWindow;
 };
 
 #endif // SUPERVISORFORMSWINDOW_H
