@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <cstddef>
+
 SupervisorChoiceWindow::SupervisorChoiceWindow(const QString& username, DatabaseManager* db, QWidget* parent)
     : QWidget(parent),
     ui(new Ui::SupervisorChoiceWindow),
@@ -21,7 +22,6 @@ SupervisorChoiceWindow::SupervisorChoiceWindow(const QString& username, Database
 
 SupervisorChoiceWindow::~SupervisorChoiceWindow() {
     delete ui;
-    // Do not delete dbManager; it is shared
     delete dashboardWindow;
     delete formsWindow;
 }

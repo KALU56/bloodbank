@@ -1,10 +1,9 @@
-```cpp
 #include "SupervisorLoginWindow.h"
 #include "ui_SupervisorLoginWindow.h"
+#include "SupervisorChoiceWindow.h"
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDebug>
-#include "SupervisorChoiceWindow.h"
 
 SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* parent)
     : QWidget(parent),
@@ -21,7 +20,6 @@ SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* paren
         throw;
     }
 
-    qDebug() << "Setting up signal-slot connections";
     connect(ui->loginButton, &QPushButton::clicked, this, &SupervisorLoginWindow::on_loginButton_clicked);
     qDebug() << "SupervisorLoginWindow constructor completed";
 }
@@ -29,7 +27,6 @@ SupervisorLoginWindow::SupervisorLoginWindow(DatabaseManager* db, QWidget* paren
 SupervisorLoginWindow::~SupervisorLoginWindow() {
     qDebug() << "Destroying SupervisorLoginWindow";
     delete ui;
-    // Do not delete dbManager; it is shared
     delete choiceWindow;
 }
 
@@ -57,4 +54,3 @@ void SupervisorLoginWindow::closeEvent(QCloseEvent* event) {
     }
     event->accept();
 }
-```
