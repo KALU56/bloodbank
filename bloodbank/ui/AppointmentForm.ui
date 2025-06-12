@@ -1,0 +1,171 @@
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterForm</class>
+ <widget class="QWidget" name="RegisterForm">
+  <property name="windowTitle">
+   <string>Register Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_firstname">
+     <property name="text">
+      <string>Firstname</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="firstname"/>
+   </item>
+
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_lastname">
+     <property name="text">
+      <string>Lastname</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lastname"/>
+   </item>
+
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_gender">
+     <property name="text">
+      <string>Gender</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QRadioButton" name="radio_male">
+       <property name="text">
+        <string>Male</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radio_female">
+       <property name="text">
+        <string>Female</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_phone">
+     <property name="text">
+      <string>Phone Number</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="phone"/>
+   </item>
+
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_username">
+     <property name="text">
+      <string>Username</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="username"/>
+   </item>
+
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_password">
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="password">
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </item>
+
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_bloodtype">
+     <property name="text">
+      <string>Blood Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QComboBox" name="bloodtype">
+     <item><property name="text"><string>A+</string></property></item>
+     <item><property name="text"><string>A-</string></property></item>
+     <item><property name="text"><string>B+</string></property></item>
+     <item><property name="text"><string>B-</string></property></item>
+     <item><property name="text"><string>AB+</string></property></item>
+     <item><property name="text"><string>AB-</string></property></item>
+     <item><property name="text"><string>O+</string></property></item>
+     <item><property name="text"><string>O-</string></property></item>
+     <item><property name="text"><string>I don't know</string></property></item>
+    </widget>
+   </item>
+
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_region">
+     <property name="text">
+      <string>Region</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="region"/>
+   </item>
+
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_woreda">
+     <property name="text">
+      <string>Woreda</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="woreda"/>
+   </item>
+
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_kebele">
+     <property name="text">
+      <string>Kebele</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="kebele"/>
+   </item>
+<item row="10" column="0">
+    <widget class="QLabel" name="label_city">
+     <property name="text">
+      <string>City</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QLineEdit" name="city"/>
+   </item>
+
+   <item row="11" column="1">
+    <widget class="QPushButton" name="submit_button">
+     <property name="text">
+      <string>Submit</string>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
